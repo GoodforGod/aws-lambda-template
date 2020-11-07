@@ -1,0 +1,118 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'application'
+
+    id 'org.sonarqube' version '3.0'
+    id 'com.diffplug.gradle.spotless' version '4.4.0'
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+group = groupId
+version = artifactVersion
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+spotless {
+    java {
+        encoding 'UTF-8'
+        removeUnusedImports()
+        eclipse().configFile "${projectDir}/config/codestyle.xml"
+    }
+}
+
+configurations {
+    all {
+        resolutionStrategy {
+            cacheChangingModulesFor(1000, 'seconds') // refresh cache for snapshots
+        }
+    }
+    micronautBom
+    compileOnly.extendsFrom(micronautBom)
+    implementation.extendsFrom(micronautBom)
+    annotationProcessor.extendsFrom(micronautBom)
+    testAnnotationProcessor.extendsFrom(micronautBom)
+}
+
+dependencies {
+    micronautBom enforcedPlatform('io.micronaut:micronaut-bom:2.1.2')
+
+    annotationProcessor 'io.micronaut:micronaut-inject-java'
+    annotationProcessor 'io.micronaut:micronaut-graal'
+
+    compileOnly 'org.graalvm.nativeimage:svm'
+
+    compile 'io.lambda.aws:aws-lambda-runtime:1.0.0-SNAPSHOT'
+
+    testAnnotationProcessor 'io.micronaut:micronaut-inject-java'
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testCompile 'org.junit.jupiter:junit-jupiter-api'
+    testCompile 'org.junit.jupiter:junit-jupiter-params'
+}
+
+//noinspection GroovyAssignabilityCheck
+run {
+    environment([
+            "SECURITY_ENABLED"      : "false",
+            "AWS_LAMBDA_RUNTIME_API": "localhost:8000",
+            "LAMBDA_LOGGING_LEVEL"  : "DEBUG",
+    ])
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+
+    environment([
+            "SECURITY_ENABLED"    : "false",
+            "LAMBDA_LOGGING_LEVEL": "DEBUG",
+    ])
+}
+
+mainClassName = "io.lambda.aws.AwsLambdaRuntime"
+jar.enabled = true
+shadowJar {
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': mainClassName
+        attributes 'Implementation-Version': artifactVersion
+        attributes 'Build-Version': buildNumber
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.incremental = true
+    options.fork = true
+}
+
+tasks.withType(Test) {
+    reports.html.enabled = false
+    reports.junitXml.enabled = false
+}
+
+javadoc {
+    options.encoding = "UTF-8"
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+
+check.dependsOn jacocoTestReport
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
