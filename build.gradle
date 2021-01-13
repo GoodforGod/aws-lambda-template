@@ -42,14 +42,14 @@ configurations {
 }
 
 dependencies {
-    micronautBom enforcedPlatform('io.micronaut:micronaut-bom:2.1.3')
+    micronautBom enforcedPlatform('io.micronaut:micronaut-bom:2.2.3')
 
     annotationProcessor 'io.micronaut:micronaut-inject-java'
     annotationProcessor 'io.micronaut:micronaut-graal'
 
     compileOnly 'org.graalvm.nativeimage:svm'
 
-    compile 'io.lambda.aws:aws-lambda-runtime:1.0.0-SNAPSHOT'
+    compile 'io.lambda.aws:aws-lambda-runtime:1.1.0-SNAPSHOT'
 
     testAnnotationProcessor 'io.micronaut:micronaut-inject-java'
 
@@ -80,7 +80,7 @@ test {
     ])
 }
 
-mainClassName = "io.lambda.aws.AwsLambdaRuntime"
+mainClassName = "io.aws.lambda.runtime.AwsLambdaRuntime"
 jar.enabled = true
 shadowJar {
     mergeServiceFiles()

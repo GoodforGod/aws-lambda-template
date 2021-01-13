@@ -22,14 +22,14 @@ WORKDIR /home/application
 
 RUN /usr/lib/graalvm/bin/gu install native-image
 
-COPY build/libs/*all.jar build/libs/aws-lambda.jar
+COPY build/libs/*all.jar build/libs/lambda.jar
 COPY bootstrap bootstrap
 
-RUN /usr/lib/graalvm/bin/native-image --no-server -cp build/libs/aws-lambda.jar
+RUN /usr/lib/graalvm/bin/native-image --no-server -cp build/libs/lambda.jar
 RUN chmod 777 bootstrap
-RUN chmod 777 aws-lambda
+RUN chmod 777 lambda
 
-RUN zip -j function.zip bootstrap aws-lambda
+RUN zip -j function.zip bootstrap lambda
 
 EXPOSE 8080
-ENTRYPOINT ["/home/application/aws-lambda"]
+ENTRYPOINT ["/home/application/lambda"]

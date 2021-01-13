@@ -9,6 +9,6 @@ public class TemplateLambda implements Lambda<String, String> {
 
     @Override
     public String handle(String request) {
-        return "response for " + request;
+        return "response to: " + request;
     }
 }
