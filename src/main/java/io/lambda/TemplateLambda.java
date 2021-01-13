@@ -1,6 +1,7 @@
 package io.lambda;
 
-import io.lambda.aws.Lambda;
+import io.aws.lambda.runtime.Lambda;
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Singleton;
 
@@ -8,7 +9,7 @@ import javax.inject.Singleton;
 public class TemplateLambda implements Lambda<String, String> {
 
     @Override
-    public String handle(String request) {
+    public String handle(@NotNull String request) {
         return "response to: " + request;
     }
 }

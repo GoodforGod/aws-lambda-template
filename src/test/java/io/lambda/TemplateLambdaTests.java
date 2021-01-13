@@ -1,8 +1,7 @@
 package io.lambda;
 
-import io.lambda.aws.AwsEventHandler;
-import io.lambda.aws.model.AwsRequestEvent;
-import io.lambda.aws.model.AwsResponseEvent;
+import io.aws.lambda.runtime.handler.impl.AwsEventHandler;
+import io.aws.lambda.runtime.model.AwsRequestContext;
 import io.micronaut.context.ApplicationContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,13 +13,12 @@ import org.junit.jupiter.api.Test;
 class TemplateLambdaTests extends Assertions {
 
     @Test
-    void handled() {
+    void handleSuccess() {
         try (final ApplicationContext context = ApplicationContext.run()) {
-            final AwsEventHandler eventHandler = context.getBean(AwsEventHandler.class);
-            final AwsRequestEvent requestEvent = new AwsRequestEvent().setBody("bob");
-            final AwsResponseEvent responseEvent = eventHandler.handle(requestEvent);
-            assertNotNull(responseEvent);
-            assertEquals("response for bob", responseEvent.getBody());
+            final AwsEventHandler handler = context.getBean(AwsEventHandler.class);
+            final AwsRequestContext requestContext = new AwsRequestContext("1", null);
+            final String response = handler.handle("bob", requestContext);
+            assertEquals("response to: bob", response);
         }
     }
 }

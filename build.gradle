@@ -46,14 +46,15 @@ dependencies {
 
     annotationProcessor 'io.micronaut:micronaut-inject-java'
     annotationProcessor 'io.micronaut:micronaut-graal'
-
     compileOnly 'org.graalvm.nativeimage:svm'
 
-    compile 'io.lambda.aws:aws-lambda-runtime:1.1.0-SNAPSHOT'
+    compile 'com.github.goodforgod:aws-lambda-runtime:1.1.0-SNAPSHOT'
 
     testAnnotationProcessor 'io.micronaut:micronaut-inject-java'
+    testCompile 'io.micronaut:micronaut-inject-java'
 
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.30'
     testCompile 'org.junit.jupiter:junit-jupiter-api'
     testCompile 'org.junit.jupiter:junit-jupiter-params'
 }
