@@ -1,15 +1,17 @@
 package io.lambda;
 
 import io.aws.lambda.runtime.Lambda;
+import io.aws.lambda.runtime.model.AwsGatewayRequest;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Singleton;
+import java.util.Map;
 
 @Singleton
-public class TemplateLambda implements Lambda<String, String> {
+public class TemplateLambda implements Lambda<Map, AwsGatewayRequest> {
 
     @Override
-    public String handle(@NotNull String request) {
-        return "response to: " + request;
+    public Map handle(@NotNull AwsGatewayRequest request) {
+        return Map.of("queryParams", request.getQueryStringParameters());
     }
 }
