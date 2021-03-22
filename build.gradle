@@ -43,13 +43,16 @@ micronaut {
         incremental true
         module project.name
         group project.group
-        annotations "io.aws.lambda.runtime.*"
+        annotations "io.lambda.*"
     }
 }
 
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-graal"
+    annotationProcessor "org.projectlombok:lombok:1.18.18"
+
+    compileOnly "org.projectlombok:lombok:1.18.18"
     compileOnly "org.graalvm.nativeimage:svm"
 
     compile "com.github.goodforgod:aws-lambda-runtime-micronaut:0.9.0-SNAPSHOT"
