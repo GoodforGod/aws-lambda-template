@@ -1,9 +1,12 @@
 package io.lambda;
 
+import io.micronaut.core.annotation.TypeHint;
+
 /**
  * @author Anton Kurako (GoodforGod)
  * @since 21.3.2021
  */
+@TypeHint(value = { User.class }, accessType = { TypeHint.AccessType.ALL_PUBLIC })
 public class User {
 
     private String id;
