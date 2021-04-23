@@ -14,14 +14,14 @@ import java.util.UUID;
  * @author GoodforGod
  * @since 27.10.2020
  */
-class TemplateLambdaTests extends Assertions {
+class BookLambdaTests extends Assertions {
 
     @Test
     void handleSuccess() {
         try (final ApplicationContext context = ApplicationContext.run()) {
             final Converter converter = context.getBean(Converter.class);
             final LambdaLogger logger = context.getBean(LambdaLogger.class);
-            final AwsEventHandler handler = new AwsEventHandler(new TemplateLambda(), converter, logger);
+            final AwsEventHandler handler = new AwsEventHandler(new BookLambda(), converter, logger);
             final String payload = "{\"context\":{\"requestId\":\"ecbc9432-a41c-4b71-bf7b-832b391e9e1b\"},\"httpMethod\":\"GET\",\"queryStringParameters\":{\"from\":\"one\",\"to\":\"ten\"},\"isBase64Encoded\":false}";
 
             final AwsRequestContext requestContext = new AwsRequestContext(UUID.randomUUID().toString(), UUID.randomUUID().toString());
