@@ -1,6 +1,6 @@
-## AWS Lambda Micronaut Template
+## AWS Lambda Template
 
-Java 11+ AWS Lambda Template with Micronaut DI support with GraalVM native compatibility.
+Java 11+ AWS Lambda Template with GraalVM native compatibility and Micronaut DI support.
 
 ## Runtime
 

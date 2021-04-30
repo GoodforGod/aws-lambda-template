@@ -3,5 +3,5 @@ micronaut:
     name: aws-lambda-template
     default-charset: UTF-8
 
-jackson:
+gson:
   date-format: yyyy-MM-dd'T'HH:mm:ss.SSSXXX
