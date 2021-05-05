@@ -16,8 +16,6 @@
         <appender-ref ref="ASYNC"/>
     </root>
 
-    <logger level="INFO" name="io.micronaut.aws"/>
-
     <logger level="INFO" name="io.lambda"/>
 
     <logger level="INFO" name="io.aws.lambda.runtime"/>
