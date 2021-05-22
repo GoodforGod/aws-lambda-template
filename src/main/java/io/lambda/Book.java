@@ -1,5 +1,6 @@
 package io.lambda;
 
+import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.TypeHint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import lombok.Getter;
 @TypeHint(value = { Book.class }, accessType = { TypeHint.AccessType.ALL_PUBLIC })
 @Getter
 @AllArgsConstructor
+@Introspected
 public class Book {
 
     private final String id;
