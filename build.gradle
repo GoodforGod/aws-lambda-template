@@ -37,7 +37,7 @@ configurations {
 }
 
 micronaut {
-    version "2.5.3"
+    version "2.5.5"
     processing {
         incremental true
         module project.name
@@ -89,7 +89,7 @@ test {
 }
 
 application {
-    mainClass = 'io.aws.lambda.runtime.micronaut.AwsLambdaRuntime'
+    mainClass = "io.aws.lambda.runtime.AwsLambdaRuntime"
 }
 
 jar.enabled = true

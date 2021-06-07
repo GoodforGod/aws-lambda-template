@@ -12,14 +12,14 @@ import java.util.UUID;
 
 @Introspected
 @Singleton
-public class BookLambda implements Lambda<Book, User> {
+public class HelloWorldLambda implements Lambda<Response, User> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
-    public Book handle(User user, @NotNull Context context) {
+    public Response handle(User user, @NotNull Context context) {
         logger.info("Processing User with name: {}", user.getName());
 
-        return new Book(UUID.randomUUID().toString(), user.getName());
+        return new Response(UUID.randomUUID().toString(), "Hello - " + user.getName());
     }
 }
